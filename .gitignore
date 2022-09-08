@@ -1,0 +1,15 @@
+venv_py/
+database/*
+.idea/
+*.pyc
+/tools/subDomainsBrute/*.txt
+/tools/home/
+/logs/poc_runner.log*
+/logs/easy_pen.log
+tools/swagger-exp/chromeSwagger
+tools/swagger-exp/api-docs.json
+tools/swagger-exp/api_summary.txt
+tmp/
+output/*
+build/
+dist/
