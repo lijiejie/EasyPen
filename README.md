@@ -1,4 +1,4 @@
-# EasyPen
+# EasyPen Alpha 1.0
 
 > Do not use EasyPen for illegal purposes, this tool is for research only
 
