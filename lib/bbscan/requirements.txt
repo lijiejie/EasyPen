@@ -1,0 +1,4 @@
+BeautifulSoup4>=4.11.1
+motor==3.0.0
+httpx>=0.23.0
+dnspython>=2.2.1
