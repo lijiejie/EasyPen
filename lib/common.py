@@ -15,7 +15,7 @@ import lib.config as conf
 import wx.lib.delayedresult as delayed_result
 
 
-pattern_ip = re.compile(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}')
+pattern_ip = re.compile(r'^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$')
 logger = logging.getLogger("easy_pen")
 
 
@@ -387,10 +387,11 @@ def count_num_of_ips(items):
 
 
 if __name__ == '__main__':
-    print(get_output_tmp_path())
-    print(is_port_num('80'))
-    print(is_ip_addr('10.1.2.4'))
-    print(is_ip_addr('10.1.2.256'))
+    print(get_output_tmp_path('test'))
+    print("is_port_num('80') ->", is_port_num('80'))
+    print("is_ip_addr('10.1.2.4') -> ", is_ip_addr('10.1.2.4'))
+    print("is_ip_addr('10.1.2.256') -> ", is_ip_addr('10.1.2.256'))
+    print("is_ip_addr('10.1.2.3a') -> ", is_ip_addr('10.1.2.3a'))
     print(check_required_tools())
 
     tests = """\
