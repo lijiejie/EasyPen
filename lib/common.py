@@ -20,13 +20,15 @@ logger = logging.getLogger("easy_pen")
 
 
 def is_ip_addr(s):
+    ret = False
     try:
         ret = pattern_ip.search(s)
         if ret:
-            return all([0 <= int(x) <= 255 for x in s.split('.')])
+            ret = all([0 <= int(x) <= 255 for x in s.split('.')])
     except Exception as e:
         pass
-    return False
+    finally:
+        return ret
 
 
 def is_port_num(s):
