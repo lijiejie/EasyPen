@@ -41,7 +41,9 @@ class AboutDialog(wx.Dialog):
 <p><b>EasyPen</b> contributors <br /><br />
 <ol>
 <li><span style="color:blue;margin-bottom: 10px;">lijiejie</span>  (https://github.com/lijiejie)</li>
-
+<li><span style="color:blue;margin-bottom: 10px;">wcc526</span>  (https://github.com/wcc526)</li>
+<li><span style="color:blue;margin-bottom: 10px;">Shinpachi8</span>  (https://github.com/Shinpachi8)</li>
+<li><span style="color:blue;margin-bottom: 10px;">helit</span></li>
 </ol>
 </p>
 
