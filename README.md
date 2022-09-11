@@ -1,4 +1,4 @@
-# EasyPen Alpha 1.0
+# EasyPen Alpha 1.0.1
 
 > Do not use EasyPen for illegal purposes, this tool is for research only
 
@@ -7,6 +7,10 @@
 It has more than 100 built-in scan scripts written in Python which covers most common vulnerabilities while at the same time it provides you some extra exploitation tools.
 
 You can easily write your own python script and apply the scan for thousands of targets. 
+
+### Change Log
+
+* 2022-09-12: important bug fix, asyncio timeout failed to gather returned vulnerabilities. 
 
 请查看文档： https://easypen.lijiejie.com/
 

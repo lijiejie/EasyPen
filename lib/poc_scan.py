@@ -105,7 +105,7 @@ class PocScanner(object):
         except Exception as e:
             logger.error('[CMSCheckPlugin][_load_scripts] Exception %s' % str(e))
 
-    async def scan(self):
+    async def scan(self, timeout):
         if not await self.is_port_open():
             logger.error('Port is not open: %s:%s ' % (self.ip, self.port))
             return []
@@ -140,16 +140,27 @@ class PocScanner(object):
 
                 scan_coro = getattr(_script, 'do_scan')(self.ip, self.port, self.service, self.is_http, self.task_msg)
                 # await scan_coro
-                coro_list.append(scan_coro)
+                coro_list.append(asyncio.create_task(scan_coro))
             except Exception as e:
                 logger.error('do_scan error: %s' % _script.__name__)
                 logger.error(traceback.format_exc())
 
+        results = []
         try:
-            results = await asyncio.gather(*coro_list, return_exceptions=True)
-        except Exception as e:
+            results = await asyncio.wait_for(asyncio.gather(*coro_list, return_exceptions=True), timeout=timeout)
+        except asyncio.TimeoutError as e:
+            for t in coro_list:
+                try:
+                    r = t.result()
+                except BaseException as e:
+                    pass
+                else:
+                    results.append(r)
+        except asyncio.exceptions.CancelledError as e:
+            pass
+        except (BaseException, Exception) as e:
             logger.info('gather exception: %s' % str(e))
-            results = []
+
         for r in results:
             if r and isinstance(r, dict) and 'alert_group' in r:
                 r['service'] = self.service
@@ -219,7 +230,7 @@ async def test_check():
            'plugin_list': []}
 
     s = PocScanner(msg)
-    r = await s.scan()
+    r = await s.scan(timeout=120)
     pprint.pprint(r)
 
 

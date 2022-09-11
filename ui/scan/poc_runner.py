@@ -102,7 +102,10 @@ class Scanner(object):
                 timeout = int(conf.brute_task_timeout * 60)
             else:
                 timeout = int(conf.normal_scan_task_timeout * 60)
-            ret = await asyncio.wait_for(s.scan(), timeout=timeout)
+            try:
+                ret = await asyncio.wait_for(s.scan(timeout=timeout), timeout=timeout+60)
+            except (Exception, BaseException) as e:
+                ret = None
             update_status = False
             if not conf.last_update_status_bar or time.time() - conf.last_update_status_bar > 1.0:
                 conf.last_update_status_bar = time.time()
