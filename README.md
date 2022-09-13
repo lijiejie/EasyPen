@@ -8,13 +8,16 @@ It has more than 100 built-in scan scripts written in Python which covers most c
 
 You can easily write your own python script and apply the scan for thousands of targets. 
 
+Microsoft Windows users can download zip file and run `EasyPen.exe` : https://github.com/lijiejie/EasyPen/releases
+
 ### Change Log
 
+* 2022-09-13: Bug fix: hydra plugin works with a hard code `timeout`. 
 * 2022-09-12: important bug fix, asyncio timeout failed to gather returned vulnerabilities. 
 
 请查看文档： https://easypen.lijiejie.com/
 
-EasyPen 是使用Python + wxPython编写、提供简洁图形界面、支持跨平台的安全扫描工具，可用于企业内外网巡检、应急响应。主要功能包括：
+`EasyPen` 是使用Python + wxPython编写、提供简洁图形界面、支持跨平台的安全扫描工具，可用于企业内外网巡检、应急响应。主要功能包括：
 
 * 资产发现：域名、IP、端口、服务等
 * 漏洞扫描：基于AsyncIO实现的扫描框架，内置超过100个漏洞检测插件，支持调度Hydra/Medusa/Ncrack等工具扫描常见弱口令

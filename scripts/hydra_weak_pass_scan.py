@@ -100,7 +100,7 @@ async def do_scan(ip, port, service, is_http, task_msg):
         )
 
         logger.info(cmd)
-        await check_cmd_output(cmd, 1800)
+        await check_cmd_output(cmd, conf.brute_task_timeout * 60)
         details = parse_result_hydra(tmp_file)
         if os.path.exists(tmp_file):
             os.remove(tmp_file)
