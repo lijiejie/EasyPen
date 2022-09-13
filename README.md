@@ -1,4 +1,4 @@
-# EasyPen Alpha 1.0.1
+# EasyPen Alpha 1.0.2
 
 > Do not use EasyPen for illegal purposes, this tool is for research only
 
