@@ -1,44 +1,48 @@
-# EasyPen Alpha 1.0.2
+<img src="ui/resource/readme_logo.png" align="center"/>
+
+# EasyPen Alpha 1.0.3
 
 > Do not use EasyPen for illegal purposes, this tool is for research only
 
-`EasyPen` is a GUI program which helps pentesters do information gathering, vulnerability scan and exploitation. 
+`EasyPen` is a GUI program which helps pentesters do target discovery, vulnerability scan and exploitation.
 
-It has more than 100 built-in scan scripts written in Python which covers most common vulnerabilities while at the same time it provides you some extra exploitation tools.
+It has over 100 built-in scan scripts which covers most common vulnerabilities, you can easily write your own scan script and map the scan for thousands of targets. 
 
-You can easily write your own python script and apply the scan for thousands of targets. 
-
-Microsoft Windows users can download zip file and run `EasyPen.exe` : https://github.com/lijiejie/EasyPen/releases
+**User Manual**： https://easypen.lijiejie.com/      [中文说明](https://github.com/lijiejie/EasyPen/blob/main/README_CN.md) 
 
 ### Change Log
 
+* 2022-09-15: Bug Fix: DNS log monitor object overwrite, brute job shouldn't create dns log monitor.
 * 2022-09-13: Bug fix: hydra plugin works with a hard code `timeout`. 
 * 2022-09-12: important bug fix, asyncio timeout failed to gather returned vulnerabilities. 
 
-请查看文档： https://easypen.lijiejie.com/
+### Install
 
-`EasyPen` 是使用Python + wxPython编写、提供简洁图形界面、支持跨平台的安全扫描工具，可用于企业内外网巡检、应急响应。主要功能包括：
+Microsoft Windows users can download zipped file and run `EasyPen.exe` : https://github.com/lijiejie/EasyPen/releases
 
-* 资产发现：域名、IP、端口、服务等
-* 漏洞扫描：基于AsyncIO实现的扫描框架，内置超过100个漏洞检测插件，支持调度Hydra/Medusa/Ncrack等工具扫描常见弱口令
-* 应急响应：高危漏洞爆发后，依托框架和现成资产库，通常只需要编写十余行检测逻辑代码，就可以在几分钟内完成对数千目标的扫描
-* 集成多个漏洞利用工具
+Users who are familiar with python can install via pip3
 
-![](ui/resource/screenshot.png)
+```
+pip3 install -r requirements.txt
+```
+
+> At present this project is developed and tested under Python3.8, please use Python3.8 to run this app
+
+### Feathers
+
+* **Discover**: Domain / IP / Port / Services discovery,  build assert databases
+* **Vulnerability Scan**：Single thread scan framework works with AsyncIO，with over 100 built-in plugins，can driven Hydra/Medusa/Ncrack to brute weak passwords
+* **Incident Response**：Whenever a critical vulnerability was disclosed，based on the assert db created by the discover module and the scan framework，in most cases, users only need to write very few lines of code to implement the vulnerability check.  After that you can map the scan script to thousands of targets and finish the scan in serveral minutes.
+* **Exploitation**: Provides you some exploit tools
+
+
+
+**Scan Panel Screenshot**
+
+![](ui/resource/screenshot.png)a
+
+
+
+**Tools Panel Screenshot**
 
 ![](ui/resource/easypen_tools.png)
-
-### 开发计划
-
-目前Alpha 1.0 完成了基础的框架开发，待开发完善的功能
-
-* 适配支持各类DNSLog平台，计划增加联动 [Antenna漏洞验证平台](https://github.com/wuba/Antenna) （ https://github.com/wuba/Antenna） 
-* 集成web指纹识别功能，标签功能（Server / Shiro / PHP / Java 等），可视化预览
-* 维护预置扫描模板（插件集合名称）
-* 添加第三方插件的执行支持，如：python / YAML 插件，支持复用其他开源项目插件
-* 简易插件编辑和调试功能
-* 漏洞查看界面一键复核验证功能（漏洞依然存在则高亮显示）
-* 优化暴力破解相关，包括字典维护
-* BBScan插件的集成
-* 扫描性能持续提升
-* 重构代码便于其他贡献者增加工具、插件
