@@ -48,3 +48,18 @@ pip3 install -r requirements.txt
 **Tools Panel Screenshot**
 
 ![](ui/resource/easypen_tools.png)
+
+### Todo
+
+Alpha 1.0 was released, includes some basic modules. Please create issues if any bugs found.  
+
+* Adapt more DNSLog APIs，includes [Antenna漏洞验证平台](https://github.com/wuba/Antenna) 
+* Web fingerprints and live preview
+* scan plugin profiles
+* Integrate other open source projects' scan plugins:  python / YAML
+* Plugin live edit and debug
+* Vulnerabilities one click recheck
+* Brute function optimization
+* Integrate with BBScan
+* Better scan performance and algorithm
+* Better code construction, more friendly for other users to contribute plugin& tools
