@@ -41,7 +41,7 @@ pip3 install -r requirements.txt
 
 **Scan Panel Screenshot**
 
-![](ui/resource/screenshot.png)a
+![](ui/resource/screenshot.png)
 
 
 
