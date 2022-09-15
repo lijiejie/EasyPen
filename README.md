@@ -6,11 +6,13 @@
 
 > Do not use EasyPen for illegal purposes, this tool is for research only
 
+[查看中文](https://github.com/lijiejie/EasyPen/blob/main/README_CN.md) 
+
 `EasyPen` is a GUI program which helps pentesters do target discovery, vulnerability scan and exploitation.
 
 It has over 100 built-in scan scripts which covers most common vulnerabilities, you can easily write your own scan script and map the scan for thousands of targets. 
 
-**User Manual**： https://easypen.lijiejie.com/      [中文说明](https://github.com/lijiejie/EasyPen/blob/main/README_CN.md) 
+**User Manual**： https://easypen.lijiejie.com/      
 
 ### Change Log
 

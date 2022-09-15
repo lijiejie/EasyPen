@@ -6,11 +6,13 @@
 
 > 请勿将EasyPen用于非法用途，本工具仅供安全研究和企业巡检自查
 
+[This doc in English](https://github.com/lijiejie/EasyPen/blob/main/README.md) 
+
 `EasyPen`是使用Python + wxPython编写、提供简洁图形界面、支持跨平台的安全扫描工具，可用于企业内外网巡检、应急响应、白帽子对各SRC的持续检测。
 
 其内置超过100个漏洞检测插件，用户可以自写插件，并快速应用于大范围扫描。
 
-**用户手册**： https://easypen.lijiejie.com/      [Docs in English](https://github.com/lijiejie/EasyPen/blob/main/README.md) 
+**用户手册**： https://easypen.lijiejie.com/   
 
 ### 更新日志
 
