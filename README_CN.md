@@ -1,30 +1,50 @@
+<div align="center">
+<img src="ui/resource/readme_logo.png" />
+</div>
 # EasyPen Alpha 1.0.3
 
-> Do not use EasyPen for illegal purposes, this tool is for research only
+> 请勿将EasyPen用于非法用途，本工具仅供安全研究和企业巡检自查
 
-`EasyPen` is a GUI program which helps pentesters do information gathering, vulnerability scan and exploitation. 
+`EasyPen`是使用Python + wxPython编写、提供简洁图形界面、支持跨平台的安全扫描工具，可用于企业内外网巡检、应急响应、白帽子对各SRC的持续检测。
 
-It has more than 100 built-in scan scripts written in Python which covers most common vulnerabilities while at the same time it provides you some extra exploitation tools.
+其内置超过100个漏洞检测插件，用户可以自写插件，并快速应用于大范围扫描。
 
-You can easily write your own python script and apply the scan for thousands of targets. 
+**用户手册**： https://easypen.lijiejie.com/      [Docs in English](https://github.com/lijiejie/EasyPen/blob/main/README.md) 
 
-Microsoft Windows users can download zip file and run `EasyPen.exe` : https://github.com/lijiejie/EasyPen/releases
+### 更新日志
 
-### Change Log
-
+* 2022-09-15: Bug Fix: DNS log monitor object overwrite, brute job shouldn't create dns log monitor.
 * 2022-09-13: Bug fix: hydra plugin works with a hard code `timeout`. 
 * 2022-09-12: important bug fix, asyncio timeout failed to gather returned vulnerabilities. 
 
-请查看文档： https://easypen.lijiejie.com/
+### 安装
 
-`EasyPen` 是使用Python + wxPython编写、提供简洁图形界面、支持跨平台的安全扫描工具，可用于企业内外网巡检、应急响应。主要功能包括：
+Windows 可以下载运行生成的可执行文件，解压后运行 `EasyPen.exe` : https://github.com/lijiejie/EasyPen/releases
 
-* 资产发现：域名、IP、端口、服务等
-* 漏洞扫描：基于AsyncIO实现的扫描框架，内置超过100个漏洞检测插件，支持调度Hydra/Medusa/Ncrack等工具扫描常见弱口令
-* 应急响应：高危漏洞爆发后，依托框架和现成资产库，通常只需要编写十余行检测逻辑代码，就可以在几分钟内完成对数千目标的扫描
-* 集成多个漏洞利用工具
+熟悉Python的用户可以使用 pip3 安装
+
+```
+pip3 install -r requirements.txt
+```
+
+> 本工具主要使用Python3.8开发测试, 请使用 Python3.8 安装运行本程序
+
+### 核心功能
+
+* **资产发现**：域名、IP、端口、服务的发现，构建资产库，用于后续扫描
+* **漏洞扫描**：基于AsyncIO实现的扫描框架，内置超过100个漏洞检测插件，支持调度Hydra/Medusa/Ncrack扫描常见弱口令
+* **应急响应**：高危漏洞爆发后，依托框架和现成资产库，通常只需要编写十余行检测逻辑代码，就可以在几分钟内完成对数千目标的扫描
+* **漏洞利用**：集成多个漏洞利用工具
+
+
+
+**扫描面板截图**
 
 ![](ui/resource/screenshot.png)
+
+
+
+**工具面板截图**
 
 ![](ui/resource/easypen_tools.png)
 
