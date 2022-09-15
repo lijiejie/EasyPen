@@ -110,24 +110,25 @@ class PocScanner(object):
             logger.error('Port is not open: %s:%s ' % (self.ip, self.port))
             return []
 
-        # DNS Monitor
-        dns_monitor = DNSMonitor()
-        dns_monitor.set_target(self.base_url)
-        key = '%s:%s' % (self.ip, self.port)
-        all_dns_monitors[key] = dns_monitor
-        async with lock_monitor:
-            if key + ':ref' not in all_dns_monitors:
-                all_dns_monitors[key + ':ref'] = 1
-            else:
-                all_dns_monitors[key + ':ref'] += 1
+        if not self.is_brute_scanner:
+            # DNS Monitor
+            dns_monitor = DNSMonitor()
+            dns_monitor.set_target(self.base_url)
+            key = '%s:%s' % (self.ip, self.port)
+            all_dns_monitors[key] = dns_monitor
+            async with lock_monitor:
+                if key + ':ref' not in all_dns_monitors:
+                    all_dns_monitors[key + ':ref'] = 1
+                else:
+                    all_dns_monitors[key + ':ref'] += 1
 
-        # Pool Reference count
-        key = '%s:%s' % (self.ip, self.port)
-        async with lock_pool:
-            if key + ':ref' not in all_pools:
-                all_pools[key + ':ref'] = 1
-            else:
-                all_pools[key + ':ref'] += 1
+            # Pool Reference count
+            key = '%s:%s' % (self.ip, self.port)
+            async with lock_pool:
+                if key + ':ref' not in all_pools:
+                    all_pools[key + ':ref'] = 1
+                else:
+                    all_pools[key + ':ref'] += 1
 
         self.load_scripts()
 
