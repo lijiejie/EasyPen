@@ -1,4 +1,6 @@
-<img src="ui/resource/readme_logo.png" align="center"/>
+<div align="center">
+<img src="ui/resource/readme_logo.png" />
+</div>
 
 # EasyPen Alpha 1.0.3
 
