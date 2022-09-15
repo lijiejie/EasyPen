@@ -33,8 +33,8 @@ pip3 install -r requirements.txt
 ### Feathers
 
 * **Discover**: Domain / IP / Port / Services discovery,  build assert databases
-* **Vulnerability Scan**：Single thread scan framework works with AsyncIO，with over 100 built-in plugins，can driven Hydra/Medusa/Ncrack to brute weak passwords
-* **Incident Response**：Whenever a critical vulnerability was disclosed，based on the assert db created by the discover module and the scan framework，in most cases, users only need to write very few lines of code to implement the vulnerability check.  After that you can map the scan script to thousands of targets and finish the scan in serveral minutes.
+* **Vulnerability Scan**：Single thread scan framework works with AsyncIO, with over 100 built-in plugins, can driven Hydra/Medusa/Ncrack to brute weak passwords
+* **Incident Response**：Whenever a critical vulnerability was disclosed, based on the assert db created by the discover module and the scan framework, in most cases, users only need to write very few lines of code to implement the vulnerability check.  After that you can map the scan script to thousands of targets and finish the scan in serveral minutes.
 * **Exploitation**: Provides you some exploit tools
 
 
