@@ -2,7 +2,7 @@
 <img src="ui/resource/readme_logo.png" />
 </div>
 
-# EasyPen Alpha 1.0.3
+# EasyPen Alpha 1.0.4
 
 > 请勿将EasyPen用于非法用途，本工具仅供安全研究和企业巡检自查
 
@@ -16,6 +16,7 @@
 
 ### 更新日志
 
+* 2022-09-16: Bug Fix: Targets input missing `is_http`.
 * 2022-09-15: Bug Fix: DNS log monitor object overwrite, brute job shouldn't create dns log monitor.
 * 2022-09-13: Bug fix: hydra plugin works with a hard code `timeout`. 
 * 2022-09-12: important bug fix, asyncio timeout failed to gather returned vulnerabilities. 

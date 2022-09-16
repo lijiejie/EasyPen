@@ -4,7 +4,8 @@
 block_cipher = None
 
 added_files = [
-    ('config', 'config'),
+    ('config/dict', 'config/dict'),
+    ('config/EasyPen.conf', 'config/'),
     ('ui/resource', 'ui/resource'),
     ('ui/tools/tools.html', 'ui/tools/'),
     ('ui/agreement.html', 'ui/'),
