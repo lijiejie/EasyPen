@@ -33,6 +33,21 @@ pip3 install -r requirements.txt
 
 > 本工具主要使用Python3.8开发测试, 请使用 Python3.8 安装运行本程序
 
+**Ubuntu 用户安装依赖工具**
+
+```
+apt install masscan nmap hydra medusa nfs-common ipmitool rsync -y
+```
+
+**CentOS 用户安装依赖工具**
+
+```
+yum install masscan nmap nfs-utils ipmitool rsync -y
+
+安装 hydra: https://github.com/vanhauser-thc/thc-hydra
+或者安装 medusa: https://github.com/jmk-foofus/medusa
+```
+
 ### 核心功能
 
 * **资产发现**：域名、IP、端口、服务的发现，构建资产库，用于后续扫描

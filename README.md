@@ -33,6 +33,21 @@ pip3 install -r requirements.txt
 
 > At present this project is developed and tested under Python3.8, please use Python3.8 to run this app
 
+**Ubuntu User**
+
+```
+apt install masscan nmap hydra medusa nfs-common ipmitool rsync -y
+```
+
+**CentOS User**
+
+```
+yum install masscan nmap nfs-utils ipmitool rsync -y
+
+Install hydra: https://github.com/vanhauser-thc/thc-hydra
+Or Install medusa: https://github.com/jmk-foofus/medusa
+```
+
 ### Feathers
 
 * **Discover**: Domain / IP / Port / Services discovery,  build assert databases
