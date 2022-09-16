@@ -13,3 +13,4 @@ tmp/
 output/*
 build/
 dist/
+config/EasyPen_dev*

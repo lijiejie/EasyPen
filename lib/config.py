@@ -107,7 +107,13 @@ def get_config():
     config_dir = os.path.join(root_dir, 'config')
     if not os.path.exists(config_dir):
         os.makedirs(config_dir)
-    config = wx.FileConfig(localFilename=os.path.join(config_dir, "EasyPen.conf"))
+    # if you're a developer, you can create a config file named
+    # EasyPen_dev.conf
+    if os.path.exists(os.path.join(config_dir, "EasyPen_dev.conf")):
+        config_file_path = os.path.join(config_dir, "EasyPen_dev.conf")
+    else:
+        config_file_path = os.path.join(config_dir, "EasyPen.conf")
+    config = wx.FileConfig(localFilename=config_file_path)
     return config
 
 
