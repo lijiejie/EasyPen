@@ -348,7 +348,7 @@ class VulnerabilityScanBox(wx.StaticBox):
             if item:
                 _ = urlparse(item, 'http')
                 if _.scheme and _.netloc:
-                    is_http = False
+                    is_http = None
                     if _.scheme.startswith('http'):
                         is_http = True
                     ip = port = None

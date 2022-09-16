@@ -8,6 +8,7 @@ import sys
 import codecs
 import logging
 import asyncio
+import httpx
 from importlib import reload
 if __name__ == '__main__':
     cwd = os.path.split(__file__)[0]
@@ -61,6 +62,17 @@ class PocScanner(object):
         except Exception as e:
             return False
 
+    async def is_http_service(self):
+        if self.is_http is None and self.port:
+            try:
+                async with httpx.AsyncClient() as client:
+                    r = await client.get('http://%s:%s' % (self.ip, self.port))
+                    if r.text.find('The plain HTTP request was sent to HTTPS port') > 0:
+                        self.service = 'https'
+                self.is_http = True
+            except Exception as e:
+                self.is_http = False
+
     def load_scripts(self):
         try:
             cwd = os.path.dirname(__file__)
@@ -111,6 +123,7 @@ class PocScanner(object):
             return []
 
         if not self.is_brute_scanner:
+            await self.is_http_service()
             # DNS Monitor
             dns_monitor = DNSMonitor()
             dns_monitor.set_target(self.base_url)
