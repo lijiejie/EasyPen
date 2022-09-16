@@ -19,7 +19,7 @@ async def do_scan(ip, port, service, is_http, task_msg):
     try:
         r = await http_client(ip, port).get(url + '/admin/', timeout=10)
         if r.status_code == 302 and 'Location' in r.headers:
-            url = r.next_request.txt_domain
+            url = r.next_request.url
             r = await http_client(ip, port).get(url, timeout=10)
 
         if r.status_code == 200 and '<title>Log in | Django site admin</title>' in r.text:
