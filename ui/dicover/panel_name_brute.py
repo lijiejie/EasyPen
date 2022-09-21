@@ -9,7 +9,7 @@ from lib.config import target_tree_list, root_path
 import lib.config as conf
 from lib.common import log_output, set_button_img, get_abs_path, edit_ports
 from ui.log import show_update_log
-from lib.process import do_masscan, do_nmap_scan
+from lib.process import do_masscan, do_nmap_scan, kill_child_processes
 from lib.database import DBManager
 from lib.jobs import BruteJob
 from lib.event import LogEvent
@@ -248,6 +248,8 @@ class NameBrutePanel(wx.Panel):
                 db_manager.close_db()
                 process = self.job_list[self.running_index].process
                 if process:
+                    if conf.is_windows_exe:
+                        kill_child_processes(process.GetPid())
                     wx.Kill(process.GetPid(), wx.SIGKILL)
                 self.update_db_thread = None
                 self.brute_finished()

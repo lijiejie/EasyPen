@@ -8,6 +8,8 @@ import os
 import json
 import logging
 import random
+import psutil
+import signal
 import lib.config as conf
 from lib.common import get_output_tmp_path, log_output
 from lib.nmap_parser import parse_nmap_output
@@ -149,6 +151,16 @@ def do_nmap_scan(port, ips):
         return hosts
     else:
         return []
+
+
+def kill_child_processes(parent_pid, sig=signal.SIGTERM):
+    try:
+        parent = psutil.Process(parent_pid)
+    except psutil.NoSuchProcess as e:
+        return
+    children = parent.children(recursive=True)
+    for process in children:
+        process.send_signal(sig)
 
 
 if __name__ == '__main__':
