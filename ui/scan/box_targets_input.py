@@ -472,17 +472,17 @@ class VulnerabilityScanBox(wx.StaticBox):
                 self.do_ping_scan(task)
 
     def do_port_scan(self, ips, scan_ports):
-        masscan_result = do_masscan(ips, scan_ports)
+        masscan_result = do_masscan(ips, scan_ports, source='poc_scan')
         for port in masscan_result:
             if self.scan_aborted:
                 return
             ips = [ip for ip in masscan_result[port]]
-            hosts = do_nmap_scan(port, ips)
+            hosts = do_nmap_scan(port, ips, source='poc_scan')
             if hosts:
                 self.port_scan_result_queue.put(('port_scan', hosts))
 
     def do_ping_scan(self, ips):
-        masscan_result = do_masscan(ips, 0, ping_only=True)
+        masscan_result = do_masscan(ips, 0, ping_only=True, source='poc_scan')
         if masscan_result:
             self.port_scan_result_queue.put(('ping_scan', masscan_result))
 

@@ -60,7 +60,14 @@ if os.path.basename(sys.executable).lower() == 'easypen.exe' or sys.executable.f
 else:
     root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# for debug, to test Windows exe file
+# is_windows_exe = True
+
 target_tree_list = []
+
+# discover
+name_brute_aborted = None
+host_discover_aborted = None
 
 # scanner
 port_scan_finished = None

@@ -153,6 +153,7 @@ class NameBrutePanel(wx.Panel):
     def brute_stop(self):
         self.btn_brute.Enable(False)
         self.brute_aborted = True
+        conf.name_brute_aborted = True
         log_output('Brute was aborted')
         conf.main_frame.statusBar.SetStatusText('Brute was aborted')
 
@@ -171,6 +172,7 @@ class NameBrutePanel(wx.Panel):
             return
 
         self.brute_aborted = None
+        conf.name_brute_aborted = False
         domains = self.txt_domain.GetValue().strip()
         if not domains or len(domains) < 4 or domains.count('.') == 0:
             wx.MessageDialog(self, 'Invalid Domain Input', 'Names Brute', wx.ICON_WARNING).ShowModal()
@@ -331,12 +333,12 @@ class NameBrutePanel(wx.Panel):
             wx.PostEvent(conf.main_frame.target_tree,
                          LogEvent(msg='Init port scan for %s IP' % len(port_scan_ip_set)))
             try:
-                masscan_result = do_masscan(port_scan_ip_set, ports_to_scan)
+                masscan_result = do_masscan(port_scan_ip_set, ports_to_scan, source='name_brute')
                 for port in masscan_result:
                     if self.brute_aborted:    # user abort
                         break
                     ips = [_ip for _ip in masscan_result[port]]
-                    hosts = do_nmap_scan(port, ips)
+                    hosts = do_nmap_scan(port, ips, source='name_brute')
                     self.port_scan_result_queue.put(hosts)
 
             except Exception as e:

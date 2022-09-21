@@ -183,6 +183,7 @@ class HostDiscoverPanel(wx.Panel):
     def host_discover_start(self, event):
         if self.btn_scan.GetLabel() == 'Stop':
             self.scan_aborted = True
+            conf.host_discover_aborted = True
             self.btn_scan.Enable(False)
             log_output('Host discover aborted, wait a few seconds...')
             conf.main_frame.statusBar.SetStatusText('Host discover was aborted')
@@ -202,6 +203,7 @@ class HostDiscoverPanel(wx.Panel):
             wx.MessageDialog(self, 'Target database not found', 'Host Discover', wx.ICON_WARNING).ShowModal()
             return
         self.scan_aborted = False
+        conf.host_discover_aborted = False
         self.enable_input(False)
         self.btn_scan.SetLabel('Stop')
         set_button_img(self.btn_scan, get_abs_path('ui/resource/brute_stop.png'))
@@ -460,17 +462,17 @@ class HostDiscoverPanel(wx.Panel):
                 self.do_ping_scan(task)
 
     def do_port_scan(self, ips, scan_ports):
-        masscan_result = do_masscan(ips, scan_ports)
+        masscan_result = do_masscan(ips, scan_ports, source='host_discover')
         for port in masscan_result:
             if self.scan_aborted:
                 return
             ips = [ip for ip in masscan_result[port]]
-            hosts = do_nmap_scan(port, ips)
+            hosts = do_nmap_scan(port, ips, source='host_discover')
             if hosts:
                 self.scan_result_queue.put(('port_scan', hosts))
 
     def do_ping_scan(self, ips):
-        masscan_result = do_masscan(ips, 0, ping_only=True)
+        masscan_result = do_masscan(ips, 0, ping_only=True, source='host_discover')
         if masscan_result:
             self.scan_result_queue.put(('ping_scan', masscan_result))
 

@@ -19,16 +19,31 @@ root_dir = os.path.abspath(os.path.join(cwd, '..'))
 logger = logging.getLogger("easy_pen")
 
 
-def run_cmd_with_timeout(cmd, timeout, shell=True):
+def run_cmd_with_timeout(cmd, timeout, shell=True, source=''):
     try:
         start_time = time.time()
         p = subprocess.Popen(cmd, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, shell=shell)
         logger.debug('Cmd: %s' % cmd)
         logger.debug('PID: %s' % p.pid)
         while p.poll() is None:
+            kill_process = False
             if time.time() - start_time > timeout:
-                msg = '[run_cmd_with_timeout.exception] Nmap process timed out: %s' % cmd
-                wx.LogMessage(msg)
+                kill_process = True
+
+            elif source == 'name_brute' and conf.name_brute_aborted:
+                kill_process = True
+
+            elif source == 'host_discover' and conf.host_discover_aborted:
+                kill_process = True
+
+            elif source == 'poc_scan' and conf.scan_aborted:
+                kill_process = True
+
+            if kill_process:
+                if not source:
+                    msg = '[run_cmd_with_timeout.exception] Process terminated: %s' % cmd
+                    wx.LogMessage(msg)
+                kill_child_processes(p.pid)
                 p.terminate()
             else:
                 time.sleep(0.2)
@@ -49,7 +64,7 @@ def run_cmd_with_timeout(cmd, timeout, shell=True):
         log_output(err_msg)
 
 
-def do_masscan(ip_set, scan_ports, return_by_ports=True, exe_path=None, ping_only=False):
+def do_masscan(ip_set, scan_ports, return_by_ports=True, exe_path=None, ping_only=False, source=''):
     ip_file_path = get_output_tmp_path('masscan_ips_%s_%s.txt' % (time.time(), round(random.random(), 3)))
     with open(ip_file_path, 'w') as f:
         for ip in ip_set:
@@ -70,7 +85,7 @@ def do_masscan(ip_set, scan_ports, return_by_ports=True, exe_path=None, ping_onl
     if conf.interface_for_masscan_enabled and conf.interface_for_masscan and conf.interface_for_masscan != 'loading':
         cmd += ' -e ' + conf.interface_for_masscan.split()[0]
 
-    run_cmd_with_timeout(cmd, 1800, shell=True)
+    run_cmd_with_timeout(cmd, 1800, shell=True, source=source)
 
     if not os.path.exists(output_file_path):
         return {}
@@ -124,7 +139,7 @@ def fix_incorrect_json(s):
         return []
 
 
-def do_nmap_scan(port, ips):
+def do_nmap_scan(port, ips, source=''):
     ip_file_path = os.path.join(root_dir, 'tools/nmap/nmap_ips_%s_%s.txt' % (
         str(time.time()), round(random.random(), 3)))
     with open(ip_file_path, 'w') as f:
@@ -140,7 +155,7 @@ def do_nmap_scan(port, ips):
                    '--script-args "' + conf.global_user_agent + '" -oX %s -iL %s'
     out_file_path = 'tools/nmap/port_scan_output_%s_%s.xml' % (str(int(time.time())), round(random.random(), 3))
     cmd = cmd_template % (port, extra_params, out_file_path, ip_file_path)
-    run_cmd_with_timeout(cmd, 600, shell=True)
+    run_cmd_with_timeout(cmd, 600, shell=True, source=source)
     if os.path.exists(out_file_path):
         hosts = parse_nmap_output(out_file_path)
         try:
@@ -158,9 +173,12 @@ def kill_child_processes(parent_pid, sig=signal.SIGTERM):
         parent = psutil.Process(parent_pid)
     except psutil.NoSuchProcess as e:
         return
-    children = parent.children(recursive=True)
-    for process in children:
-        process.send_signal(sig)
+    try:
+        children = parent.children(recursive=True)
+        for process in children:
+            process.send_signal(sig)
+    except Exception as e:
+        pass
 
 
 if __name__ == '__main__':
