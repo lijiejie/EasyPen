@@ -81,12 +81,11 @@ class MainFrame(wx.Frame):
         conf.load_config()
 
         self.notebook = wx.Notebook(main_panel, -1, style=wx.CLIP_CHILDREN)
-        if 'wxMac' not in wx.PlatformInfo:
-            img_list = wx.ImageList(16, 16)
-            for img_name in ['targets_icon.png', 'db_view_icon.png', 'vul_scan.png',
-                             'exp_icon.png', 'settings_icon.png']:
-                img_list.Add(wx.Image('ui/resource/%s' % img_name).ConvertToBitmap())
-            self.notebook.AssignImageList(img_list)
+        img_list = wx.ImageList(16, 16)
+        for img_name in ['targets_icon.png', 'db_view_icon.png', 'vul_scan.png',
+                         'exp_icon.png', 'settings_icon.png']:
+            img_list.Add(wx.Image('ui/resource/%s' % img_name).ConvertToBitmap())
+        self.notebook.AssignImageList(img_list)
 
         self.python_shell = None
         self.build_menu_bar()
