@@ -2,7 +2,7 @@
 <img src="ui/resource/readme_logo.png" />
 </div>
 
-# EasyPen Alpha 1.0.5
+# EasyPen Alpha 1.0.6
 
 > Do not use EasyPen for illegal purposes, this tool is for research only
 
@@ -15,7 +15,7 @@ It has over 100 built-in scan scripts which covers most common vulnerabilities, 
 **User Manual**： https://easypen.lijiejie.com/      
 
 ### Change Log
-
+* 2022-10-18: Bug Fix: Brute task access DNS log, weak passwords found not write to the result table as expected.
 * 2022-09-21: Bug Fix: Terminate all child processes immediately after `STOP` click.
 * 2022-09-16: Bug Fix: Targets input missing `is_http`.
 * 2022-09-15: Bug Fix: DNS log monitor object overwrite, brute job shouldn't create dns log monitor.

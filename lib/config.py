@@ -25,7 +25,7 @@ ncrack_found = None
 hydra_found = None
 hydra_path = ''
 
-app_ver = 'alpha 1.0.5'
+app_ver = 'alpha 1.0.6'
 
 global_font_size = 9
 global_user_agent = None

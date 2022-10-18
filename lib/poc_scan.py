@@ -185,56 +185,57 @@ class PocScanner(object):
                 logger.error(r)
                 self.results.append(r)
 
-        if dns_monitor.dns_to_check:
-            hit_domains = await dns_monitor.check()
-            if hit_domains:
-                for domain in hit_domains:
-                    if not dns_monitor.dns_to_check.get(domain):
-                        continue
-                    alert_group, details = dns_monitor.dns_to_check.get(domain)
-                    vul = {
-                        'service': self.service,
-                        'ip': self.ip,
-                        'port': self.port,
-                        'plugin_name': 'poc_scan',
-                        'alert_group': alert_group,
-                        'affects': self.base_url,
-                        'details': 'DNS Request captured: %s\n' % (domain + '.' + dns_monitor.DOMAIN_POSTFIX) +
-                                   '\n\n' + details
-                    }
-                    self.results.append(vul)
-        if dns_monitor.web_to_check:
-            for domain in dns_monitor.web_to_check:
-                if await dns_monitor.check(keyword=domain, log_type='web'):
-                    alert_group, details = dns_monitor.web_to_check.get(domain)
-                    vul = {
-                        'service': self.service,
-                        'ip': self.ip,
-                        'port': self.port,
-                        'plugin_name': 'poc_scan',
-                        'alert_group': alert_group,
-                        'affects': self.base_url,
-                        'details': 'HTTP Request captured: http://%s\n' % (domain + '.' + dns_monitor.DOMAIN_POSTFIX) +
-                                   '\n\n' + details
-                    }
-                    self.results.append(vul)
+        if not self.is_brute_scanner:
+            if dns_monitor.dns_to_check:
+                hit_domains = await dns_monitor.check()
+                if hit_domains:
+                    for domain in hit_domains:
+                        if not dns_monitor.dns_to_check.get(domain):
+                            continue
+                        alert_group, details = dns_monitor.dns_to_check.get(domain)
+                        vul = {
+                            'service': self.service,
+                            'ip': self.ip,
+                            'port': self.port,
+                            'plugin_name': 'poc_scan',
+                            'alert_group': alert_group,
+                            'affects': self.base_url,
+                            'details': 'DNS Request captured: %s\n' % (domain + '.' + dns_monitor.DOMAIN_POSTFIX) +
+                                       '\n\n' + details
+                        }
+                        self.results.append(vul)
+            if dns_monitor.web_to_check:
+                for domain in dns_monitor.web_to_check:
+                    if await dns_monitor.check(keyword=domain, log_type='web'):
+                        alert_group, details = dns_monitor.web_to_check.get(domain)
+                        vul = {
+                            'service': self.service,
+                            'ip': self.ip,
+                            'port': self.port,
+                            'plugin_name': 'poc_scan',
+                            'alert_group': alert_group,
+                            'affects': self.base_url,
+                            'details': 'HTTP Request captured: http://%s\n' % (domain + '.' + dns_monitor.DOMAIN_POSTFIX) +
+                                       '\n\n' + details
+                        }
+                        self.results.append(vul)
 
-        if DEBUG_PLUGIN:
-            logger.info('Connection pool size: %s' % len(http_client(self.ip, self.port)._transport._pool.connections))
+            if DEBUG_PLUGIN:
+                logger.info('Connection pool size: %s' % len(http_client(self.ip, self.port)._transport._pool.connections))
 
-        key = '%s:%s' % (self.ip, self.port)
-        async with lock_pool:
-            all_pools[key + ':ref'] -= 1
-            if all_pools[key + ':ref'] <= 0:
-                await http_client(self.ip, self.port).aclose()
-                all_pools.pop(key)
-                all_pools.pop(key + ':ref')
+            key = '%s:%s' % (self.ip, self.port)
+            async with lock_pool:
+                all_pools[key + ':ref'] -= 1
+                if all_pools[key + ':ref'] <= 0:
+                    await http_client(self.ip, self.port).aclose()
+                    all_pools.pop(key)
+                    all_pools.pop(key + ':ref')
 
-        async with lock_monitor:
-            all_dns_monitors[key + ':ref'] -= 1
-            if all_dns_monitors[key + ':ref'] <= 0:
-                all_dns_monitors.pop(key)
-                all_dns_monitors.pop(key + ':ref')
+            async with lock_monitor:
+                all_dns_monitors[key + ':ref'] -= 1
+                if all_dns_monitors[key + ':ref'] <= 0:
+                    all_dns_monitors.pop(key)
+                    all_dns_monitors.pop(key + ':ref')
 
         return self.results
 
