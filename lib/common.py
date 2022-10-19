@@ -206,7 +206,8 @@ def check_required_tools_callback(result, frame):
     win_pcap_npcap_missing = False
     if platform.system() == 'Windows':
         try:
-            p = subprocess.Popen(conf.masscan_path + ' -v', stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
+            p = subprocess.Popen('"' + conf.masscan_path + '" -v',
+                                 stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
             output, error = p.communicate()
             if output.find(b'masscan --nmap') >= 0:
                 masscan_found = True
@@ -253,7 +254,8 @@ def check_required_tools_callback(result, frame):
 
     if masscan_found and not win_pcap_npcap_missing:
         try:
-            output = subprocess.check_output(conf.masscan_path + ' --iflist', stderr=subprocess.STDOUT, shell=True)
+            output = subprocess.check_output('"' + conf.masscan_path + '" --iflist',
+                                             stderr=subprocess.STDOUT, shell=True)
             for line in output.splitlines():
                 line = line.strip()
                 if line:

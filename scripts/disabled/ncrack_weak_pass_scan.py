@@ -71,7 +71,7 @@ async def do_scan(ip, port, service, is_http, task_msg):
             else:
                 pwd_file_path = os.path.join(dict_dir, 'password.txt')
 
-            format_str = '%s -U %s -P %s -f %s://%s:%s -oX %s'
+            format_str = '"%s" -U %s -P %s -f %s://%s:%s -oX %s'
             cmd = format_str % (ncrack_path,
                                 os.path.join(dict_dir, '%s_user.txt' % service),
                                 pwd_file_path,

@@ -88,7 +88,7 @@ async def do_scan(ip, port, service, is_http, task_msg):
         else:
             params_of_user = '-L %s' % user_file_path
 
-        cmd = '%s %s -P %s -t 4 -s %s -e r -f -o %s %s %s >%s 2>&1' % (
+        cmd = '"%s" %s -P %s -t 4 -s %s -e r -f -o %s %s %s >%s 2>&1' % (
             hydra_path,
             params_of_user,
             passwd_file_path,
