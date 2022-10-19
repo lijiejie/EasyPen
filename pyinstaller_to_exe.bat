@@ -8,4 +8,6 @@ cd tools\iis_shortname_scanner & pyinstaller iis_shortname_scanner.spec
 cd ..\..
 cd tools\swagger-exp & pyinstaller swagger-exp.spec
 cd ..\..
+cd tools\subDomainsBrute & pyinstaller subDomainsBrute.spec
+cd ..\..
 pyinstaller EasyPen.spec --noconfirm
